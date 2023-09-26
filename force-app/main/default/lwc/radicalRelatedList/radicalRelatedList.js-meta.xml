@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <isExposed>true</isExposed>
+
+    <masterLabel>Radical Related List</masterLabel>
+
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <!-- <supportedFormFactors>
+                <supportedFormFactor type="Small" />
+                <supportedFormFactor type="Large" />
+            </supportedFormFactors> -->
+            <!-- <objects>
+                <object>Application__c</object>
+            </objects>  -->
+            <property name="headerName" label="Header Title" type="String" />
+            <property name="subHeader" label="Sub Header" type="String" />
+            <property name="parentRecord" type="String" label="Parent Record"/>
+            <property name="childRecordId" type="String" label="Child Field to Match Parent Record"/>
+            <property name="objectName" type="String" label="Object"/>
+            <property name="fieldsName" type="String" label="Fields(comma seprated API Names)"/>
+            <property name="isEditable" type="String" label="Inline Editable Cells" />
+            <property name="iconName" type="String" label="Icon Name" />
+            <property name="fieldToWriteRecordIdTo" type="String" label="Api name of field to write Record Id to on new record" />
+            <property name="orderByField" type="String" label="Sort Field Api Name" />
+            <property name="orderByDirection" type="String" label="Sort Direction ( ASC, DESC )" />
+        </targetConfig>
+
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="recordId" type="String" required="true" default="{!recordId}"/>
+            <property name="headerName" label="Header Title" type="String" />
+            <property name="subHeader" label="Sub Header" type="String" />
+            <property name="parentRecord" type="String" label="Parent Record API Field"/>
+            <property name="childRecordId" type="String" label="Child Field to Match Parent Record"/>
+            <property name="objectName" type="String" label="Object"/>
+            <property name="fieldsName" type="String" label="Fields(comma seprated API Names)"/>
+            <property name="isEditable" type="String" label="Inline Editable Cells" />
+            <property name="iconName" type="String" label="Icon Name" />
+            <property name="fieldToWriteRecordIdTo" type="String" label="Api name of field to write Record Id to on new record" />
+            <property name="orderByField" type="String" label="Sort Field Api Name" />
+            <property name="orderByDirection" type="String" label="Sort Direction ( ASC, DESC )" />
+        </targetConfig>
+    </targetConfigs>
+
+</LightningComponentBundle>

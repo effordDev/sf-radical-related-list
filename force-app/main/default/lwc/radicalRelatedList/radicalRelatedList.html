@@ -1,0 +1,70 @@
+<template>
+    <!-- {recordId} <br />
+    {headerName} <br />
+    {parentRecord} <br />
+    {childRecordId} <br />
+    {objectName} <br />
+    {fieldsName} <br />
+    {isEditable} <br />
+    {iconName} <br />
+    {fieldToWriteRecordIdTo} <br />
+    {orderByField} <br />
+    {orderByDirection} <br /> -->
+
+    <div class="slds-page-header">
+        <div class="slds-page-header__row">
+            <div class="slds-page-header__col-title">
+                <div class="slds-media">
+                    <div class="slds-media__figure">
+
+                        <span class="slds-icon_container slds-icon-standard-opportunity" title={headerName}>
+                            <lightning-icon
+                                icon-name={iconName}
+                            ></lightning-icon>
+                        </span>
+
+                    </div>
+                    <div class="slds-media__body">
+                        
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                    <h1>
+                                        <span class="slds-page-header__title slds-truncate">
+                                            {headerName}
+                                        </span>
+                                    </h1>
+                                </div>
+                            </div> 
+                       
+                        
+                            <p class="slds-page-header__name-meta">
+                                {subHeader}
+                            </p> 
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+
+        <template lwc:if={records.length}>
+            <c-radical-datatable
+                key-field="Id"
+                data={records}
+                columns={cols}
+                draft-values={draftValues}
+                oncellchange={handleCellChange}
+                onvaluechange={handleValueChange}
+                onsave={handleSave}
+                oncancel={handleCancel}
+                hide-checkbox-column
+                is-loading={isLoading}
+                class="slds-max-medium-table_stacked-horizontal"
+            ></c-radical-datatable>
+        </template>
+        <template lwc:else>
+            No Data...
+        </template>
+    </div>
+</template>

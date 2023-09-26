@@ -1,0 +1,45 @@
+<template>
+    <div class="lookupBlock" id="lookup">
+        <template lwc:if={active}>
+            <div class="lookup-container">
+                <lightning-record-edit-form 
+                    object-api-name={childSobject}
+                    record-id={context}
+                >
+                    <lightning-input-field 
+                        class="slds-popover slds-popover_edit slds-popover__body"
+                        field-name={fieldName} 
+                        value={value} 
+                        variant="label-hidden" 
+                        onchange={custom__handleChange}>
+                    </lightning-input-field>
+                </lightning-record-edit-form>
+            </div>
+        </template>
+        <template lwc:else>
+            <div class="slds-table_edit_container slds-is-relative">
+                <span class="slds-grid slds-grid_align-spread slds-cell-edit slds-align_absolute-center">
+                    <span class="slds-truncate">
+                        <lightning-record-view-form 
+                            object-api-name={childSobject}
+                            record-id={context}
+                        >
+                            <lightning-output-field 
+                                field-name={fieldName} 
+                                variant="label-hidden" 
+                            ></lightning-output-field>
+                        </lightning-record-view-form>
+                    </span>
+                    <button data-id={context} class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small" tabindex="-1"
+                        title="Edit" onclick={handleClick}>
+                        <svg class="slds-button__icon slds-button__icon_hint slds-button__icon_lock slds-button__icon_small slds-button__icon_edit slds-icon slds-icon-text-default slds-icon_xx-small"
+                            aria-hidden="true">
+                            <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.37.1#edit"></use>
+                        </svg>
+                        <span class="slds-assistive-text">Edit</span>
+                    </button>
+                </span>
+            </div>
+        </template>
+    </div>
+</template>

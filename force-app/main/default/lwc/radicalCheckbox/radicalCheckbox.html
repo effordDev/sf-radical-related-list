@@ -1,0 +1,56 @@
+<template>
+    
+    <div style="text-align:center">
+
+        <template lwc:if={active}>
+            <div class="container">
+
+                <lightning-input 
+                    class="slds-popover slds-popover_edit slds-popover__body"
+                    name="checkbox" 
+                    type="checkbox" 
+                    label={label} 
+                    checked={value} 
+                    onchange={custom__handleChange}
+                    dropdown-alignment="auto"
+                    variant='label-hidden'
+                ></lightning-input>
+            </div>
+        </template>
+
+        <template lwc:else>
+            <div class="slds-table_edit_container slds-is-relative">
+                <span class="slds-grid slds-grid_align-spread slds-cell-edit">
+                    <span class="slds-truncate" title={value}> &nbsp;
+                        <lightning-input 
+                            disabled
+                            name="checkbox" 
+                            type="checkbox" 
+                            label={label} 
+                            checked={value} 
+                            onchange={custom__handleChange}
+                            dropdown-alignment="auto"
+                            variant='label-hidden'
+                        ></lightning-input>
+                    </span>
+                    <!-- sldsValidatorIgnoreNextLine -->
+                    <button 
+                        data-id={context} 
+                        class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small" 
+                        tabindex="-1" 
+                        title="Edit"
+                        onclick={handleClick}
+                    >
+                        <svg class="slds-button__icon slds-button__icon_hint slds-button__icon_lock slds-button__icon_small slds-button__icon_edit slds-icon slds-icon-text-default slds-icon_xx-small"
+                            aria-hidden="true">
+                            <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.37.1#edit"></use>
+                        </svg>
+                        <span class="slds-assistive-text">Edit</span>
+                    </button>
+                </span>
+            </div>
+        </template>
+
+    </div>
+
+</template>

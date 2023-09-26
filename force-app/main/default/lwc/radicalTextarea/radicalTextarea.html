@@ -1,0 +1,47 @@
+<template>
+    
+    <div class="picklistBlock">
+
+        <template lwc:if={active}>
+            <div class="container">
+
+                <lightning-textarea 
+                    class="slds-popover slds-popover_edit slds-popover__body"
+                    name="textarea" 
+                    placeholder="type here..."
+                    label={label} 
+                    value={value} 
+                    onchange={handleChange}
+                    onblur={custom__handleChange}
+                    variant='label-hidden'
+                ></lightning-textarea>
+            </div>
+        </template>
+
+        <template lwc:else>
+            <div class="slds-table_edit_container slds-is-relative">
+                <span class="slds-grid slds-grid_align-spread slds-cell-edit">
+                    <span class="slds-truncate" title={value}> &nbsp;
+                        {value}
+                    </span>
+                    <!-- sldsValidatorIgnoreNextLine -->
+                    <button 
+                        data-id={context} 
+                        class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small" 
+                        tabindex="-1" 
+                        title="Edit"
+                        onclick={handleClick}
+                    >
+                        <svg class="slds-button__icon slds-button__icon_hint slds-button__icon_lock slds-button__icon_small slds-button__icon_edit slds-icon slds-icon-text-default slds-icon_xx-small"
+                            aria-hidden="true">
+                            <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.37.1#edit"></use>
+                        </svg>
+                        <span class="slds-assistive-text">Edit</span>
+                    </button>
+                </span>
+            </div>
+        </template>
+
+    </div>
+
+</template>
