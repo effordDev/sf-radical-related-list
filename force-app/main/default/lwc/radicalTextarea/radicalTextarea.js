@@ -2,45 +2,30 @@ import {api, LightningElement } from 'lwc';
 
 export default class RadicalTextarea extends LightningElement {
 
-    @api label = ''
-    @api value = ''
-    @api context = ''
-    @api contextName = ''
     @api fieldName = ''
+    @api record = {}
+    @api isEdit = false
 
-    active = false
-
-    handleClick(event) {
-        event.preventDefault();
-        event.stopPropagation();
-
-        this.active = true
+    get recordValue() {
+        return this.record[this.fieldName]
+    }
+    get disabled() {
+        return !this.isEdit
     }
 
     handleChange(event) {
-        this.value = event.detail.value
-    }
+        console.log(event.detail.value)
+        const value = event.detail.value
 
-    custom__handleChange(event) {
-        event.preventDefault();
-
-        this.active = false
-
-        // const { value } = event.target;
-
-        const detail = {
-            type: 'textarea-change',
-            value: this.value,
-			field: this.fieldName,
-			relatedTo: this.context,
-        }
-        
         this.dispatchEvent(
-            new CustomEvent('valuechange', {
-                detail,
-                composed: true,
+            new CustomEvent('cellchange', {
                 bubbles: true,
-                cancelable: true,
+                composed: true,
+                detail: {
+                    value,
+                    rowId: this.record.Id,
+                    fieldName: this.fieldName
+                }
             })
         )
     }

@@ -1,18 +1,16 @@
 <template>
-    
     <template lwc:if={disabled}>
         <lightning-formatted-rich-text
             value={recordValue}
         ></lightning-formatted-rich-text>
     </template>
-
     <template lwc:else>
-        <lightning-input-rich-text
-            name="richtext" 
-            value={recordValue}
-            onchange={handleChange}
+        <lightning-input 
+            name="text" 
+            type="text" 
             variant='label-hidden'
-        ></lightning-input-rich-text>
+            value={recordValue} 
+            onchange={handleChange}
+        ></lightning-input>
     </template>
-
 </template>

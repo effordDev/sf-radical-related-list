@@ -1,0 +1,63 @@
+<template>
+    
+    <template for:each={fields} for:item="field">
+
+        <td key={field.value} class="slds-text-align_center" data-label={field.label}>
+            <div key={field.value} title={field.label}>
+                <c-radical-datatable-cell
+                    key={field.value}
+                    record-id={recordId}
+                    field={field}
+                    record={record}
+                    edit-state={editState}
+                    oncellchange={handleCellChange}
+                ></c-radical-datatable-cell>
+            </div>
+        </td>
+
+    </template>
+
+    <td scope="col">
+        <div title="edit">
+            
+            <!-- sldsValidatorIgnoreNextLine -->
+            <template lwc:if={isEdit}>
+
+                <lightning-button-icon
+                    class="slds-m-left_xx-small" 
+                    title="Save"
+                    variant="border-filled" 
+                    alternative-text="Save" 
+                    icon-name='utility:save'
+                    onclick={handleSaveClick}
+                ></lightning-button-icon>
+
+                <lightning-button-icon
+                    class="slds-m-left_xx-small" 
+                    title="Edit"
+                    variant="border-filled" 
+                    alternative-text="Cancel" 
+                    icon-name='utility:close'
+                    onclick={handleCancelClick}
+                ></lightning-button-icon>
+            </template>
+            <template lwc:elseif={isSaving}>
+                <lightning-dynamic-icon
+                    type="ellie"
+                    alternative-text="Saving..."
+                ></lightning-dynamic-icon>
+            </template>
+            <template lwc:else>
+                <lightning-button-icon
+                    class="slds-m-left_xx-small" 
+                    title="Edit"
+                    variant="brand" 
+                    alternative-text="Edit" 
+                    icon-name='utility:edit'
+                    onclick={handleEditClick}
+                ></lightning-button-icon>
+            </template>
+        </div>
+    </td>
+
+</template>

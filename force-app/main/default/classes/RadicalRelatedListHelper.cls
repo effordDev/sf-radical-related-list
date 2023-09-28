@@ -238,6 +238,15 @@ public with sharing class RadicalRelatedListHelper {
             throw new AuraHandledException(err.getMessage());
         }
     }
+
+    @AuraEnabled
+    public static void updateSobs(List<Sobject> sobs) {
+        try {
+            update sobs;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
  
     @AuraEnabled
     public static void deleteRecord( Id recordId ) {

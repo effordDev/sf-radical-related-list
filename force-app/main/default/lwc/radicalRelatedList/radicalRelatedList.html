@@ -24,22 +24,23 @@
                         </span>
 
                     </div>
+
                     <div class="slds-media__body">
                         
-                            <div class="slds-page-header__name">
-                                <div class="slds-page-header__name-title">
-                                    <h1>
-                                        <span class="slds-page-header__title slds-truncate">
-                                            {headerName}
-                                        </span>
-                                    </h1>
-                                </div>
-                            </div> 
-                       
-                        
-                            <p class="slds-page-header__name-meta">
-                                {subHeader}
-                            </p> 
+                        <div class="slds-page-header__name">
+                            <div class="slds-page-header__name-title">
+                                <h1>
+                                    <span class="slds-page-header__title slds-truncate">
+                                        {headerName}
+                                    </span>
+                                </h1>
+                            </div>
+                        </div> 
+                    
+                    
+                        <p class="slds-page-header__name-meta">
+                            {subHeader}
+                        </p> 
                        
                     </div>
                 </div>
@@ -48,23 +49,18 @@
 
         <br />
 
-        <template lwc:if={records.length}>
+        <template lwc:if={recordsList.length}>
+            
             <c-radical-datatable
-                key-field="Id"
-                data={records}
-                columns={cols}
-                draft-values={draftValues}
-                oncellchange={handleCellChange}
-                onvaluechange={handleValueChange}
-                onsave={handleSave}
-                oncancel={handleCancel}
-                hide-checkbox-column
-                is-loading={isLoading}
-                class="slds-max-medium-table_stacked-horizontal"
+                record-id={recordId}
+                fields={fieldsList}
+                records={recordsList}
             ></c-radical-datatable>
+           
         </template>
         <template lwc:else>
             No Data...
         </template>
+       
     </div>
 </template>

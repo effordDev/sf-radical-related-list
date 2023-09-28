@@ -1,0 +1,7 @@
+/* :host {
+    display: table-cell;
+} */
+
+.t {
+    display: block;
+}

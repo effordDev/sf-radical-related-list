@@ -1,4 +1,8 @@
-.slds-grid .slds-hyphenate {
+
+:host {
+    --sds-c-textarea-sizing-min-height: 200px;
+}
+ .slds-grid .slds-hyphenate {
     width: 100%
 }
 

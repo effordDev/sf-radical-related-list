@@ -1,9 +1,10 @@
 import { api, LightningElement } from 'lwc';
 
-export default class RadicalDateTime extends LightningElement {
+export default class RadicalDate extends LightningElement {
     @api fieldName = ''
     @api record = {}
     @api isEdit = false
+    
     
     get recordValue() {
         return this.record[this.fieldName]
@@ -13,8 +14,8 @@ export default class RadicalDateTime extends LightningElement {
     }
 
     handleChange(event) {
-        console.log(event.detail.value)
-        const value = event.detail.value
+        console.log(event.detail.checked)
+        const value = event.detail.checked
 
         this.dispatchEvent(
             new CustomEvent('cellchange', {

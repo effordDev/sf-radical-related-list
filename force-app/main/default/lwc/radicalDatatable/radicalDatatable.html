@@ -1,3 +1,40 @@
 <template>
+
+    <!-- <table> -->
+    <table class="slds-table slds-table_bordered slds-table_resizable-cols">
+        <thead>
+            <tr>
+            <!-- <tr class="slds-line-height_reset"> -->
+                <template for:each={fields} for:item="field">
+                    <th key={field.value} class="slds-text-align_center" scope="col">
+                        <div class="slds-truncate" title={field.label}>
+                            {field.label}
+                        </div>
+                    </th>
+                </template>
+
+
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="edit">
+                        <!-- edit btn col -->
+                    </div>
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <template for:each={records} for:item="record">
+                <c-radical-datatable-row
+                    key={record.Id}
+                    class="slds-hint-parent"
+                    record-id={recordId}
+                    fields={fields}
+                    record={record}
+                ></c-radical-datatable-row>
+            </template>
+        </tbody>
+    </table>
+   
     
 </template>
+        

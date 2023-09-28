@@ -17,23 +17,11 @@ export default class RadicalRelatedList extends LightningElement {
     @api orderByDirection = ''
     
     @track draftValues = []
-    @track records = []
+    @track recordsList = []
     lastSavedRecords = []
 
     config = {}
     isLoading = false
-    isComponentLoaded = false
-
-    // renderedCallback() {
-    //     if (!this.isComponentLoaded) {
-    //         /* Add Click event listener to listen to window click to reset the picklist selection 
-    //         to text view if context is out of sync*/
-    //         window.addEventListener('click', (evt) => {
-    //             this.handleWindowOnclick(evt);
-    //         });
-    //         this.isComponentLoaded = true;
-    //     }
-    // }
 
     connectedCallback() {
         this.fetchRecords()
@@ -42,83 +30,9 @@ export default class RadicalRelatedList extends LightningElement {
     get fieldsList() {
         return this.config?.fieldsList || []
     }
-    // get records() {
+    // get recordList() {
     //     return this.config?.recordList || []
     // }
-    get cols() {
-        return this.fieldsList.map(fieldData => {
-            const item = {
-                label: fieldData?.label,
-                fieldName: fieldData?.value,
-                type: fieldData?.ltngType,
-                editable: fieldData?.isEditable
-            }
-
-            if (fieldData?.ltngType === 'picklist') {
-
-                item.typeAttributes = {
-                    placeholder: 'Select Value',
-                    label: fieldData?.label,
-                    value: { fieldName: fieldData?.value }, // default value for picklist,
-                    fieldName: fieldData?.value,
-                    options: fieldData.picklistValues,
-                    context: { fieldName: 'Id' },
-                    contextName: 'Id'
-                }
-            } else if (fieldData?.ltngType === 'datetime') {
-
-                item.typeAttributes = {
-                    label: fieldData?.label,
-                    value: { fieldName: fieldData?.value }, // default value for picklist,
-                    fieldName: fieldData?.value,
-                    context: { fieldName: 'Id' },
-                    contextName: 'Id'
-                }
-            } else if (fieldData?.ltngType === 'plaintextarea') {
-
-                item.typeAttributes = {
-                    label: fieldData?.label,
-                    value: { fieldName: fieldData?.value }, // default value for picklist,
-                    fieldName: fieldData?.value,
-                    context: { fieldName: 'Id' },
-                    contextName: 'Id'
-                }
-            } else if (fieldData?.ltngType === 'richtextarea') {
-
-                item.typeAttributes = {
-                    label: fieldData?.label,
-                    value: { fieldName: fieldData?.value }, // default value for picklist,
-                    fieldName: fieldData?.value,
-                    context: { fieldName: 'Id' },
-                    contextName: 'Id',
-                    editable: fieldData.isEditable
-                }
-            } else if (fieldData?.ltngType === 'checkbox') {
-
-                item.typeAttributes = {
-                    label: fieldData?.label,
-                    value: { fieldName: fieldData?.value }, // default value for picklist,
-                    fieldName: fieldData?.value,
-                    context: { fieldName: 'Id' },
-                    contextName: 'Id',
-                    editable: fieldData.isEditable
-                }
-            } else if (fieldData?.ltngType === 'reference') {
-
-                item.typeAttributes = {
-                    label: fieldData?.label,
-                    value: { fieldName: fieldData?.value }, // default value for picklist,
-                    fieldName: fieldData?.value,
-                    childSobject: this.objectName,
-                    context: { fieldName: 'Id' },
-                    contextName: 'Id',
-                    editable: fieldData.isEditable
-                }
-            }
-
-            return item
-        })
-    }
 
     async fetchRecords(init) {
         try {
@@ -135,9 +49,9 @@ export default class RadicalRelatedList extends LightningElement {
                 orderByDirection: this.orderByDirection
             })
     
-            this.records = this.config?.recordList || []
+            this.recordsList = this.config?.recordList || []
             
-            this.lastSavedRecords = this.records
+            this.lastSavedRecords = this.config?.recordList
             
             console.log(
                 JSON.parse(JSON.stringify(this.config))
@@ -173,19 +87,6 @@ export default class RadicalRelatedList extends LightningElement {
         this.draftValues = []
     }
 
-    // handleWindowOnclick(context) {
-    //     this.resetPopups('c-datatable-picklist', context);
-    // }
-
-    // resetPopups(markup, context) {
-    //     let elementMarkup = this.privateChildren[markup];
-    //     if (elementMarkup) {
-    //         Object.values(elementMarkup).forEach((element) => {
-    //             element.callbacks.reset(context);
-    //         });
-    //     }
-    // }
-
     handleCancel() {
         this.records = this.lastSavedRecords
     }
@@ -212,96 +113,5 @@ export default class RadicalRelatedList extends LightningElement {
             }]
         }
     }
-
-    handleValueChange(event) {
-        console.log(JSON.parse(JSON.stringify(event.detail)))
-
-        if (!event?.detail?.type) {
-            return
-        }
-
-        const {
-            type,
-            relatedTo,
-            field,
-            value
-        } = event.detail
-
-        if ([
-            'picklist-change',
-            'datetime-change',
-            'textarea-change',
-            'rich-textarea-change',
-            'checkbox-change',
-        ].includes(type)) {
-
-            console.log(JSON.parse(JSON.stringify({
-                type,
-                relatedTo,
-                field,
-                value
-            })))
-
-            this.setClassesOnData(
-                relatedTo,
-                field,
-                'slds-cell-edit slds-is-edited'
-            );
-
-            const match = x => x.Id === relatedTo
-
-            if (this.draftValues.some(match)) {
-                this.draftValues.forEach(draft => {
-                    if (match(draft)) {
-                        draft[field] = value
-                    }
-                })
-            } else {
-                this.draftValues = [...this.draftValues, {
-                    Id: relatedTo,
-                    [field]: value
-                }]
-            }
-            
-            this.records = this.records.map(record => {
-                if (match(record)) {
-                    record[field] = value
-                }
-                return record
-            })
-
-            console.log(JSON.parse(JSON.stringify(this.draftValues)))
-            console.log(JSON.parse(JSON.stringify(this.records)))
-        }
-    }
-
-    // handleEdit(event) {
-    //     event.preventDefault();
-
-    //     let dataRecieved = event.detail.data;
-
-    //     this.handleWindowOnclick(dataRecieved.context);
-
-    //     switch (dataRecieved.label) {
-    //         case 'Stage':
-    //             this.setClassesOnData(
-    //                 dataRecieved.context,
-    //                 'stageClass',
-    //                 'slds-cell-edit'
-    //             );
-    //             break;
-    //         default:
-    //             this.setClassesOnData(dataRecieved.context, '', '');
-    //             break;
-    //     };
-    // }
-
-    setClassesOnData(id, fieldName, fieldValue) {
-        this.records = JSON.parse(JSON.stringify(this.records));
-        this.records.forEach(detail => {
-            if (detail.Id === id) {
-                detail[fieldName] = fieldValue;
-            }
-        });
-    }
+    
 }
