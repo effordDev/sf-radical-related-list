@@ -29,6 +29,7 @@
             <property name="isEditable" type="String" label="Inline Editable Cells" />
             <property name="iconName" type="String" label="Icon Name" />
             <property name="fieldToWriteRecordIdTo" type="String" label="Api name of field to write Record Id to on new record" />
+            <property name="filter" type="String" label="Filter" description="Where clause to be added to query (RecordType.Name = 'Event')"/>
             <property name="orderByField" type="String" label="Sort Field Api Name" />
             <property name="orderByDirection" type="String" label="Sort Direction ( ASC, DESC )" />
         </targetConfig>
@@ -44,6 +45,7 @@
             <property name="isEditable" type="String" label="Inline Editable Cells" />
             <property name="iconName" type="String" label="Icon Name" />
             <property name="fieldToWriteRecordIdTo" type="String" label="Api name of field to write Record Id to on new record" />
+            <property name="filter" type="String" label="Filter" description="Where clause to be added to query (RecordType.Name = 'Event')"/>
             <property name="orderByField" type="String" label="Sort Field Api Name" />
             <property name="orderByDirection" type="String" label="Sort Direction ( ASC, DESC )" />
         </targetConfig>

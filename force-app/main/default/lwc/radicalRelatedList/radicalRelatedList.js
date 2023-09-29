@@ -13,6 +13,7 @@ export default class RadicalRelatedList extends LightningElement {
     @api isEditable = ''
     @api iconName = ''
     @api fieldToWriteRecordIdTo = ''
+    @api filter = ''
     @api orderByField = ''
     @api orderByDirection = ''
     
@@ -24,6 +25,7 @@ export default class RadicalRelatedList extends LightningElement {
     isLoading = false
 
     connectedCallback() {
+        console.log(this.filter)
         this.fetchRecords()
     }
 
@@ -45,6 +47,7 @@ export default class RadicalRelatedList extends LightningElement {
                 isEdit: this.isEditable,
                 grandParentRecordId: this.parentRecord,
                 childRecordId: this.childRecordId,
+                filter: this.filter,
                 orderByField: this.orderByField,
                 orderByDirection: this.orderByDirection
             })

@@ -19,6 +19,7 @@ public with sharing class RadicalRelatedListHelper {
         String isEdit, 
         String grandParentRecordId, 
         String childRecordId, 
+        String filter, 
         String orderByField, 
         String orderByDirection
     ) {
@@ -176,7 +177,12 @@ public with sharing class RadicalRelatedListHelper {
             if (isGrandParentMatch) {
                 query += ' FROM ' + objectName + ' WHERE ' + childRecordId + ' = \''+ parentMatchId + '\'' + orderBy + ' LIMIT 49999';
             } else {
-                query += ' FROM ' + objectName + ' WHERE '+ relationshipName + ' = \'' + parentRecordId + '\'' + orderBy + ' LIMIT 49999';
+                query += ' FROM ' + objectName 
+                + ' WHERE '+ relationshipName + ' = \'' + parentRecordId + '\'';
+                if (filter != null) {
+                    query += ' AND ' + filter; 
+                }
+                query += orderBy + ' LIMIT 49999';
             }
 
             system.debug('query');
