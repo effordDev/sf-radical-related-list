@@ -1,7 +1,7 @@
 import { api, track, LightningElement } from 'lwc';
 
 import getRecords from '@salesforce/apex/RadicalRelatedListHelper.getRecords'
-import saveSobjects from '@salesforce/apex/RadicalRelatedListHelper.saveSobjects'
+// import saveSobjects from '@salesforce/apex/RadicalRelatedListHelper.saveSobjects'
 export default class RadicalRelatedList extends LightningElement {
     @api recordId = ''
     @api headerName = ''
@@ -66,19 +66,19 @@ export default class RadicalRelatedList extends LightningElement {
         }
     }
 
-    async saveSobs(sobs) {
-        try {
-            this.isLoading = true
+    // async saveSobs(sobs) {
+    //     try {
+    //         this.isLoading = true
 
-            await saveSobjects({
-                sobs
-            })
-        } catch (error) {
-            console.error(error)
-        } finally {
-            this.isLoading = false
-        }
-    }
+    //         await saveSobjects({
+    //             sobs
+    //         })
+    //     } catch (error) {
+    //         console.error(error)
+    //     } finally {
+    //         this.isLoading = false
+    //     }
+    // }
 
     async handleSave(event) {
         this.draftValues = event.detail.draftValues
