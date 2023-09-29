@@ -6,13 +6,20 @@ export default class RadicalDatatableRow extends LightningElement {
     @api recordId = ''
     @api fields = []
     @api record = {}
-
+    // _record = {}
     updatedRecord = {}
 
     @track error = {}
 
     isSaving = false
     editState = false
+
+    // @api get record() {
+    //     return this._record
+    // }
+    // set record(value) {
+    //     this._record = Object.assign({}, value)
+    // }
 
     async handleSaveClick(event) {
 
@@ -36,6 +43,10 @@ export default class RadicalDatatableRow extends LightningElement {
         // this.editState = this.editState ? false : true   
         this.editState = false
         console.log('cancel')
+
+        this.record = Object.assign({}, this.record);
+
+        console.log(JSON.parse(JSON.stringify(this.record)))
     }
 
     handleEditClick(event) {

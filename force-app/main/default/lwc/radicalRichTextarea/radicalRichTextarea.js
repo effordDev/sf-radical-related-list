@@ -1,28 +1,36 @@
-import { api, LightningElement } from 'lwc';
+import { api, track, LightningElement } from 'lwc';
 
 export default class RadicalRichTextarea extends LightningElement {
     @api fieldName = ''
-    @api record = {}
-    @api isEdit = false
 
-    value = ''
+    @api isEdit = false
+    @track _record = {}
+
+    @api get record() {
+        return this._record
+    }
+    set record(value) {
+        this._record = Object.assign({}, value)
+    }
 
     get recordValue() {
-        return this.value || this.record[this.fieldName]
+        return this.record[this.fieldName]
     }
     get disabled() {
         return !this.isEdit
     }
 
     handleChange(event) {
-        this.value = event.detail.value
+        const value = event.detail.value
+
+        this.record[this.fieldName] = value
 
         this.dispatchEvent(
             new CustomEvent('cellchange', {
                 bubbles: true,
                 composed: true,
                 detail: {
-                    value: this.value,
+                    value,
                     rowId: this.record.Id,
                     fieldName: this.fieldName
                 }

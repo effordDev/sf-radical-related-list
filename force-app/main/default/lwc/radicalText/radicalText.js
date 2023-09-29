@@ -1,13 +1,20 @@
-import { api, LightningElement } from 'lwc';
+import { api, track, LightningElement } from 'lwc';
 
 export default class RadicalText extends LightningElement {
     @api fieldName = ''
-    @api record = {}
+    // @api record = {}
     @api isEdit = false
-    value = ''
+    @track _record = {}
+    
+    @api get record() {
+        return this._record
+    }
+    set record(value) {
+        this._record = Object.assign({}, value)
+    }
     
     get recordValue() {
-        return this.value || this.record[this.fieldName]
+        return this.record[this.fieldName]
     }
     get disabled() {
         return !this.isEdit
@@ -15,7 +22,9 @@ export default class RadicalText extends LightningElement {
 
     handleChange(event) {
 
-        this.value = event.detail.value
+        const value = event.detail.value
+
+        this.record[this.fieldName] = value
 
         this.dispatchEvent(
             new CustomEvent('cellchange', {

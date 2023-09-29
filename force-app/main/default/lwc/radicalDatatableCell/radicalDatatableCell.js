@@ -11,9 +11,9 @@ export default class RadicalDatatableCell extends LightningElement {
         return this.field?.value
     }
 
-    get recordValue() {
-        return this.record[this.fieldAPIName]
-    }
+    // get recordValue() {
+    //     return this.record[this.fieldAPIName]
+    // }
     get options() {
         return this.field?.picklistValues || []
     }

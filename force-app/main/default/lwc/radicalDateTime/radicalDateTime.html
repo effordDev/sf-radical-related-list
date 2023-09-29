@@ -1,6 +1,6 @@
 <template>
 
-    <template lwc:if={disabled}>
+    <!-- <template lwc:if={disabled}>
         <div class="slds-table_edit_container slds-is-relative"> 
             <lightning-input 
                 name="datetime" 
@@ -10,9 +10,9 @@
                 onchange={handleChange}
                 disabled
             ></lightning-input>
-        </div>
-    </template>
-    <template lwc:else>
+        </div> -->
+    <!-- </template>
+    <template lwc:else> -->
             <div class="picklist-container">
                 <lightning-input 
                     dropdown-alignment="auto"
@@ -21,8 +21,9 @@
                     variant='label-hidden'
                     value={recordValue} 
                     onchange={handleChange}
+                    disabled={disabled}
                 ></lightning-input>
             </div>
-    </template>
+    <!-- </template> -->
             
 </template>
