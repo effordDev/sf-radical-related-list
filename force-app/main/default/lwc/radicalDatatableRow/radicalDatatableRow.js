@@ -1,5 +1,5 @@
 import { api, track, LightningElement } from 'lwc';
-import updateSobs from '@salesforce/apex/RadicalRelatedListHelper.updateSobs';
+// import updateSobs from '@salesforce/apex/RadicalRelatedListHelper.updateSobs';
 import { updateRecord } from "lightning/uiRecordApi";
 
 export default class RadicalDatatableRow extends LightningElement {

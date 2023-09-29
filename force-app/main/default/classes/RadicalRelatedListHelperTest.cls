@@ -20,17 +20,20 @@ public with sharing class RadicalRelatedListHelperTest {
     
     public static testmethod void test() {
         Account acct =[SELECT Id FROM Account limit 1];
-        string myAcc = '{"Id":"'+acct.Id+'","Name":"test acc"}';
-        Test.startTest();
-        system.debug('acct--> '+acct);
-        RadicalRelatedListHelper.ReturnWrapper result = RadicalRelatedListHelper.getRecords(
-            acct.Id,'Opportunity',
-            'Name,CloseDate,Probability,StageName,IQscore,Amount,IsPrivate',
-            'true', '', '', '', ''
-        );
-        String saveResult1 = RadicalRelatedListHelper.saveRecord('Account',myAcc);
 
-        RadicalRelatedListHelper.deleteRecord( acct.Id );
+        Test.startTest();
+        
+            RadicalRelatedListHelper.ReturnWrapper result = RadicalRelatedListHelper.getRecords(
+                acct.Id,'Opportunity',
+                'Name,CloseDate,Probability,StageName,IQscore,Amount,IsPrivate',
+                'true', 
+                '', 
+                '', 
+                'Name != "Test"', 
+                '', 
+                ''
+            );
+       
         Test.stopTest();
     }
 }

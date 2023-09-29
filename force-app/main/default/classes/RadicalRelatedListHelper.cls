@@ -4,14 +4,6 @@ public with sharing class RadicalRelatedListHelper {
     public class myException extends BaseException {}
 
     @AuraEnabled
-    public static void saveSobjects(List<Sobject> sobs){
-        try {
-            update sobs;
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
-        }
-    }
-    @AuraEnabled
     public static ReturnWrapper getRecords(
         String parentRecordId, 
         String sObjectName, 
@@ -23,15 +15,6 @@ public with sharing class RadicalRelatedListHelper {
         String orderByField, 
         String orderByDirection
     ) {
-
-        system.debug('parentRecordId: ' + parentRecordId);
-        system.debug('sObjectName: ' + sObjectName);
-        system.debug('fieldsList: ' + fieldsList);
-        system.debug('isEdit: ' + isEdit);
-        system.debug('grandParentRecordId: ' + grandParentRecordId);
-        system.debug('childRecordId: ' + childRecordId);
-        system.debug('orderByField: ' + orderByField);
-        system.debug('orderByDirection: ' + orderByDirection);
 
         ReturnWrapper result = new ReturnWrapper();
         List<FieldWrapper> fieldsWP = new List<FieldWrapper>();
@@ -175,7 +158,12 @@ public with sharing class RadicalRelatedListHelper {
             string sortOrder = !String.isBlank( orderByDirection ) ? orderByDirection : 'ASC';
             string orderBy = !String.isBlank( orderByField ) ? ' ORDER BY ' +orderByField + ' ' + sortOrder : '';
             if (isGrandParentMatch) {
-                query += ' FROM ' + objectName + ' WHERE ' + childRecordId + ' = \''+ parentMatchId + '\'' + orderBy + ' LIMIT 49999';
+                query += ' FROM ' + objectName 
+                + ' WHERE ' + childRecordId + ' = \''+ parentMatchId + '\'';
+                if (filter != null) {
+                    query += ' AND ' + filter; 
+                }
+                query += orderBy + ' LIMIT 49999';
             } else {
                 query += ' FROM ' + objectName 
                 + ' WHERE '+ relationshipName + ' = \'' + parentRecordId + '\'';
@@ -206,60 +194,54 @@ public with sharing class RadicalRelatedListHelper {
         return picklistValues;
     }
  
-    @AuraEnabled
-    public static String saveRecord(String objectName, String recordData) {
-        try {
-            Map<String, Object> fieldMap = (Map<String, Object>)JSON.deserializeUntyped(recordData);
-            Schema.SObjectType targetType = Schema.getGlobalDescribe().get(objectName);
-            SObject newSobject = targetType.newSObject();
-            for (String key : fieldMap.keySet()) {
-                Object value = fieldMap.get(key);
-                Schema.DisplayType valueType = targetType.getDescribe().fields.getMap().get(key).getDescribe().getType();
-                if (value instanceof String && valueType != Schema.DisplayType.String) {
-                    String svalue = (String)value;
-                    if (valueType == Schema.DisplayType.Date)
-                        newSobject.put(key, Date.valueOf(svalue));
-                    else if(valueType == Schema.DisplayType.DateTime)
-                        newSobject.put(key, DateTime.valueOf(svalue));
-                    else if (valueType == Schema.DisplayType.Percent || valueType == Schema.DisplayType.Currency)
-                        newSobject.put(key, svalue == '' ? null : Decimal.valueOf(svalue));
-                    else if (valueType == Schema.DisplayType.Double)
-                        newSobject.put(key, svalue == '' ? null : Double.valueOf(svalue));
-                    else if (valueType == Schema.DisplayType.Integer)
-                        newSobject.put(key, Integer.valueOf(svalue));
-                    else if (valueType == Schema.DisplayType.Base64)
-                        newSobject.put(key, Blob.valueOf(svalue));
-                    else if (valueType == Schema.DisplayType.Time)
-                        newSobject.put(key, Time.newInstance(Integer.valueOf(svalue.split(':')[0]), Integer.valueOf(svalue.split(':')[1]), 00, 00));
-                    else
-                        newSobject.put(key, svalue);
-                }
-                else
-                    newSobject.put(key, value);
-            }
-            upsert newSobject;
-            return 'success';
-        } catch(Exception err) {
-            system.debug(err.getMessage());
-            throw new AuraHandledException(err.getMessage());
-        }
-    }
+    // @AuraEnabled
+    // public static String saveRecord(String objectName, String recordData) {
+    //     try {
+    //         Map<String, Object> fieldMap = (Map<String, Object>)JSON.deserializeUntyped(recordData);
+    //         Schema.SObjectType targetType = Schema.getGlobalDescribe().get(objectName);
+    //         SObject newSobject = targetType.newSObject();
+    //         for (String key : fieldMap.keySet()) {
+    //             Object value = fieldMap.get(key);
+    //             Schema.DisplayType valueType = targetType.getDescribe().fields.getMap().get(key).getDescribe().getType();
+    //             if (value instanceof String && valueType != Schema.DisplayType.String) {
+    //                 String svalue = (String)value;
+    //                 if (valueType == Schema.DisplayType.Date)
+    //                     newSobject.put(key, Date.valueOf(svalue));
+    //                 else if(valueType == Schema.DisplayType.DateTime)
+    //                     newSobject.put(key, DateTime.valueOf(svalue));
+    //                 else if (valueType == Schema.DisplayType.Percent || valueType == Schema.DisplayType.Currency)
+    //                     newSobject.put(key, svalue == '' ? null : Decimal.valueOf(svalue));
+    //                 else if (valueType == Schema.DisplayType.Double)
+    //                     newSobject.put(key, svalue == '' ? null : Double.valueOf(svalue));
+    //                 else if (valueType == Schema.DisplayType.Integer)
+    //                     newSobject.put(key, Integer.valueOf(svalue));
+    //                 else if (valueType == Schema.DisplayType.Base64)
+    //                     newSobject.put(key, Blob.valueOf(svalue));
+    //                 else if (valueType == Schema.DisplayType.Time)
+    //                     newSobject.put(key, Time.newInstance(Integer.valueOf(svalue.split(':')[0]), Integer.valueOf(svalue.split(':')[1]), 00, 00));
+    //                 else
+    //                     newSobject.put(key, svalue);
+    //             }
+    //             else
+    //                 newSobject.put(key, value);
+    //         }
+    //         upsert newSobject;
+    //         return 'success';
+    //     } catch(Exception err) {
+    //         system.debug(err.getMessage());
+    //         throw new AuraHandledException(err.getMessage());
+    //     }
+    // }
 
-    @AuraEnabled
-    public static void updateSobs(List<Sobject> sobs) {
-        try {
-            update sobs;
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
-        }
-    }
- 
-    @AuraEnabled
-    public static void deleteRecord( Id recordId ) {
-        if( recordId != null ) {            
-            Database.delete(recordId);
-        }
-    }
+    // @AuraEnabled
+    // public static void updateSobs(List<Sobject> sobs) {
+    //     try {
+    //         update sobs;
+    //     } catch (Exception e) {
+    //         throw new AuraHandledException(e.getMessage());
+    //     }
+    // }
+
 
     public static Map<String, String> apexTypetoJSType = new Map<String, String> {
         'ID' => 'id',
