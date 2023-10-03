@@ -3,6 +3,7 @@ import { api, LightningElement } from 'lwc';
 export default class RadicalDatatableCell extends LightningElement {
 
     @api recordId = ''
+    @api childSobject = ''
     @api field = {}
     @api record = {}
     @api editState = false
@@ -46,5 +47,8 @@ export default class RadicalDatatableCell extends LightningElement {
     }
     get isTextarea() {
         return this.ltngType === 'plaintextarea'
+    }
+    get isReference() {
+        return this.ltngType === 'reference'
     }
 }

@@ -79,6 +79,7 @@ public with sharing class RadicalRelatedListHelper {
                 if(String.valueof(fieldDesc.getType()) == 'LOCATION') {
                     throw new MyException('Geo Location Fields are not supported : Field ' + field.trim());
                 }
+
                 if(String.valueof(fieldDesc.getType()) == 'PICKLIST') {
                     fieldsWP.add(
                         new FieldWrapper(
@@ -87,10 +88,27 @@ public with sharing class RadicalRelatedListHelper {
                             String.valueof(fieldDesc.getType()), 
                             apexTypetoJSType.get(String.valueof(fieldDesc.getType())), 
                             fieldDesc.isUpdateable(), 
-                            getPicklistValues(sObjectName, 
-                            fieldDesc.getName())
+                            getPicklistValues(sObjectName,fieldDesc.getName()),
+                            null
                         )
                     );
+                } else if (String.valueof(fieldDesc.getType()) == 'REFERENCE') {
+
+                    fieldsWP.add(
+                        new FieldWrapper(
+                            fieldDesc.getLabel(), 
+                            fieldDesc.getName(), 
+                            String.valueof(fieldDesc.getType()), 
+                            apexTypetoJSType.get(String.valueof(fieldDesc.getType())), 
+                            fieldDesc.isUpdateable(), 
+                            null,
+                            new ReferenceInfo(
+                                String.valueOf(fieldDesc.getReferenceTo()),
+                                fieldDesc.isNamePointing()
+                            )
+                        )
+                    );
+                    
                 } else if (
                     String.valueof(fieldDesc.getType()) == 'STRING'
                     && fieldDesc.isCalculated() 
@@ -104,6 +122,7 @@ public with sharing class RadicalRelatedListHelper {
                             'RICHTEXTAREA', 
                             'richtextarea', 
                             fieldDesc.isUpdateable(), 
+                            null,
                             null
                         )
                     );
@@ -131,6 +150,7 @@ public with sharing class RadicalRelatedListHelper {
                             dataType, 
                             ltngType.toLowerCase(), 
                             fieldDesc.isUpdateable(), 
+                            null,
                             null
                         )
                     );
@@ -157,24 +177,23 @@ public with sharing class RadicalRelatedListHelper {
 
             string sortOrder = !String.isBlank( orderByDirection ) ? orderByDirection : 'ASC';
             string orderBy = !String.isBlank( orderByField ) ? ' ORDER BY ' +orderByField + ' ' + sortOrder : '';
+
+            string filterby = !String.isBlank( filter ) ? ' AND ' + filter : ' ';
+
             if (isGrandParentMatch) {
-                query += ' FROM ' + objectName 
-                + ' WHERE ' + childRecordId + ' = \''+ parentMatchId + '\'';
-                if (filter != null) {
-                    query += ' AND ' + filter; 
-                }
+                query += ' FROM ' + objectName + ' WHERE ' + childRecordId + ' = \''+ parentMatchId + '\'';
+                query += filterby; 
                 query += orderBy + ' LIMIT 49999';
             } else {
-                query += ' FROM ' + objectName 
-                + ' WHERE '+ relationshipName + ' = \'' + parentRecordId + '\'';
-                if (filter != null) {
-                    query += ' AND ' + filter; 
-                }
+                query += ' FROM ' + objectName + ' WHERE '+ relationshipName + ' = \'' + parentRecordId + '\'';
+                query += filterby; 
                 query += orderBy + ' LIMIT 49999';
             }
 
             system.debug('query');
             system.debug(query);
+            system.debug('fieldsWP');
+            system.debug(fieldsWP);
 
             result.fieldsList = fieldsWP;
             result.recordList = Database.query(query);
@@ -277,13 +296,23 @@ public with sharing class RadicalRelatedListHelper {
         @AuraEnabled public String ltngType;
         @AuraEnabled public Boolean isEditable;
         @AuraEnabled public List<PicklistOptions> picklistValues;
-        public FieldWrapper(String label, String value, String dataType, String ltngType, Boolean isEditable, List<PicklistOptions> picklistValues) {
+        @AuraEnabled public ReferenceInfo referenceInfo;
+        public FieldWrapper(
+            String label, 
+            String value, 
+            String dataType, 
+            String ltngType, 
+            Boolean isEditable, 
+            List<PicklistOptions> picklistValues,
+            ReferenceInfo referenceInfo
+        ) {
             this.label = label;
             this.value = value;
             this.dataType = dataType;
             this.ltngType = ltngType;
             this.isEditable = isEditable;
             this.picklistValues = picklistValues;
+            this.referenceInfo = referenceInfo;
         }
     }
  
@@ -293,6 +322,14 @@ public with sharing class RadicalRelatedListHelper {
         public PicklistOptions(String label, String value) {
             this.label = label;
             this.value = value;
+        }
+    }
+    public class ReferenceInfo {
+        @AuraEnabled public String referenceTo;
+        @AuraEnabled public Boolean isNamePointing;
+        public ReferenceInfo(String referenceTo, Boolean isNamePointing) {
+            this.referenceTo = referenceTo;
+            this.isNamePointing = isNamePointing;
         }
     }
 }

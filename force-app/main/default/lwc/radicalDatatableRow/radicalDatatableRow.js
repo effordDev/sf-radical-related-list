@@ -6,6 +6,7 @@ export default class RadicalDatatableRow extends LightningElement {
     @api recordId = ''
     @api fields = []
     @api record = {}
+    @api childSobject = ''
     // _record = {}
     updatedRecord = {}
 

@@ -60,4 +60,13 @@
             ></c-radical-textarea>
         </template>
 
+        <template lwc:elseif={isReference}>
+            <c-radical-reference
+                field-name={fieldAPIName}
+                record={record}
+                is-edit={isEdit}
+                child-sobject={childSobject}
+            ></c-radical-reference>
+        </template>
+
 </template>
