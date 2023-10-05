@@ -8,7 +8,7 @@ public with sharing class RadicalRelatedListHelper {
         String parentRecordId, 
         String sObjectName, 
         String fieldsList, 
-        String isEdit, 
+        // String isEdit, 
         String grandParentRecordId, 
         String childRecordId, 
         String filter, 
