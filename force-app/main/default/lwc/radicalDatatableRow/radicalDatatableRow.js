@@ -1,4 +1,5 @@
 import { api, track, LightningElement } from 'lwc';
+import LightningConfirm from 'lightning/confirm';
 import { deleteRecord } from 'lightning/uiRecordApi';
 // import updateSobs from '@salesforce/apex/RadicalRelatedListHelper.updateSobs';
 import { updateRecord } from "lightning/uiRecordApi";
@@ -35,6 +36,17 @@ export default class RadicalDatatableRow extends LightningElement {
             await updateRecord({
                 fields: this.updatedRecord
             })
+
+            this.dispatchEvent(
+                new CustomEvent('refresh', {
+                    bubbles: true,
+                    composed: true,
+                    detail: {
+                        value: this.record.Id
+                    }
+                })
+            )
+
         } catch (error) {
             console.error(error)
         } finally {
@@ -73,6 +85,17 @@ export default class RadicalDatatableRow extends LightningElement {
     async handleDeleteClick() {
         
         try {
+
+            if (!await LightningConfirm.open({
+                message: `Are you sure you want to delete ${this.record.Id}?`,
+                // variant: 'headerless',
+                label: 'Confirm deletion',
+                theme: 'alt-inverse'
+                // setting theme would have no effect
+            })) {
+                return
+            }
+
             console.log('delete ', this.record.Id)
 
             this.isSaving = true
