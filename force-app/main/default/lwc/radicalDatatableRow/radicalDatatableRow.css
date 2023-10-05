@@ -1,3 +1,15 @@
 :host {
     display: table-row;
 }
+
+.deleteBtn {
+    /* --slds-c-button-color-: red; */
+    --slds-c-button-color-border: red;
+    --slds-c-button-color-background: red;
+    --slds-c-button-text-color: white;
+    --slds-c-icon-color-foreground: white;
+
+    --slds-c-button-color-border-hover: red;
+    --slds-c-button-brand-text-color-hover: red;
+    --slds-c-button-brand-color-background-hover: white;
+}

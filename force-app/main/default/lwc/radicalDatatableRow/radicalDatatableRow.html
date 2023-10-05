@@ -19,7 +19,7 @@
     </template>
 
     <td scope="col">
-        <div title="edit">
+        <span title="edit">
             
             <!-- sldsValidatorIgnoreNextLine -->
             <template lwc:if={isEdit}>
@@ -31,6 +31,7 @@
                     alternative-text="Save" 
                     icon-name='utility:save'
                     onclick={handleSaveClick}
+                    disabled={isSaving}
                 ></lightning-button-icon>
 
                 <lightning-button-icon
@@ -40,6 +41,7 @@
                     alternative-text="Cancel" 
                     icon-name='utility:close'
                     onclick={handleCancelClick}
+                    disabled={isSaving}
                 ></lightning-button-icon>
             </template>
             <template lwc:elseif={isSaving}>
@@ -56,9 +58,23 @@
                     alternative-text="Edit" 
                     icon-name='utility:edit'
                     onclick={handleEditClick}
+                    disabled={isSaving}
                 ></lightning-button-icon>
             </template>
-        </div>
+        </span>
+
+        <template lwc:if={showDeleteButton}>
+            <span>
+                <lightning-button-icon
+                    class="slds-m-left_xx-small deleteBtn" 
+                    title="Delete"
+                    alternative-text="Delete" 
+                    icon-name='utility:delete'
+                    onclick={handleDeleteClick}
+                    disabled={isSaving}
+                ></lightning-button-icon>
+            </span>
+        </template>
     </td>
 
 </template>

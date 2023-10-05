@@ -6,4 +6,5 @@ export default class RadicalRelatedList extends LightningElement {
     @api records = []
     @api lastSavedRecords = []
     @api childSobject = ''
+    @api showDeleteButton = false
 }

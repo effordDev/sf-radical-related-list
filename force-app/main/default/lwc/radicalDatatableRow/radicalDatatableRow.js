@@ -1,4 +1,5 @@
 import { api, track, LightningElement } from 'lwc';
+import { deleteRecord } from 'lightning/uiRecordApi';
 // import updateSobs from '@salesforce/apex/RadicalRelatedListHelper.updateSobs';
 import { updateRecord } from "lightning/uiRecordApi";
 
@@ -7,6 +8,7 @@ export default class RadicalDatatableRow extends LightningElement {
     @api fields = []
     @api record = {}
     @api childSobject = ''
+    @api showDeleteButton = false
     // _record = {}
     updatedRecord = {}
 
@@ -66,6 +68,31 @@ export default class RadicalDatatableRow extends LightningElement {
         this.updatedRecord[fieldName] = value
 
         console.log(JSON.parse(JSON.stringify(this.updatedRecord)))
+    }
+
+    async handleDeleteClick() {
+        
+        try {
+            console.log('delete ', this.record.Id)
+
+            this.isSaving = true
+            
+            await deleteRecord(this.record.Id)
+
+            this.dispatchEvent(
+                new CustomEvent('delete', {
+                    bubbles: true,
+                    composed: true,
+                    detail: {
+                        value: this.record.Id
+                    }
+                })
+            )
+        } catch (error) {
+            console.error(error)
+        } finally {
+            this.isSaving = false
+        }
     }
 
     get isEdit() {

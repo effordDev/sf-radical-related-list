@@ -8,11 +8,13 @@ export default class RadicalRelatedList extends LightningElement {
     @api subHeader = ''
     @api parentRecord = ''
     @api childRecordId = ''
+    @api showNewButton = false
+    @api showDeleteButton = false
     @api objectName = ''
     @api fieldsName = ''
-    @api isEditable = ''
+    // @api isEditable = ''
     @api iconName = ''
-    @api fieldToWriteRecordIdTo = ''
+    // @api fieldToWriteRecordIdTo = ''
     @api filter = ''
     @api orderByField = ''
     @api orderByDirection = ''
@@ -44,7 +46,7 @@ export default class RadicalRelatedList extends LightningElement {
                 parentRecordId: this.recordId,
                 sObjectName: this.objectName,
                 fieldsList: this.fieldsName,
-                isEdit: this.isEditable,
+                // isEdit: this.isEditable,
                 grandParentRecordId: this.parentRecord,
                 childRecordId: this.childRecordId,
                 filter: this.filter,
@@ -64,6 +66,17 @@ export default class RadicalRelatedList extends LightningElement {
         } finally {
             this.isLoading = false
         }
+    }
+
+    handleRefresh() {
+        console.log('refresh');
+        this.fetchRecords()
+    }
+
+    handleDelete(event) {
+        const deletedRecordId = event.detail.value
+
+        this.recordsList = this.recordsList.filter(record => record.Id != deletedRecordId)
     }
 
     // async saveSobs(sobs) {

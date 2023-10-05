@@ -43,6 +43,16 @@
                         </p> 
                        
                     </div>
+
+                    <template lwc:if={showNewButton}>
+                        <c-radical-new-record
+                            record-id={recordId}
+                            parent-field={parentRecord}
+                            sobject={objectName}
+                            onrefresh={handleRefresh}
+                        ></c-radical-new-record>
+                    </template>
+
                 </div>
             </div>
         </div>
@@ -55,7 +65,9 @@
                 record-id={recordId}
                 fields={fieldsList}
                 records={recordsList}
+                ondelete={handleDelete}
                 child-sobject={objectName}
+                show-delete-button={showDeleteButton}
             ></c-radical-datatable>
            
         </template>

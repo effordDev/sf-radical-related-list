@@ -1,0 +1,67 @@
+<template>
+    <div class="slds-page-header__col-actions">
+        <div class="slds-page-header__controls">
+            <div class="slds-page-header__control">
+                <lightning-button
+                    label="New"
+                    onclick={handleNewRecordClick}
+                ></lightning-button>
+            </div>
+        </div>
+    </div>
+
+    <template lwc:if={active}>
+
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+            
+
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">
+                        New Record
+                    </h1>
+                </div>
+
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <!-- 
+                        {recordId}
+                        {sobject}
+                        {selectedRecordTypeId} 
+                    -->
+                    <template lwc:if={recordTypeOptions.length}>
+
+                        <div class="slds-box">
+                            <lightning-radio-group 
+                                name="radioGroup"
+                                label="Record Types"
+                                options={recordTypeOptions}
+                                onchange={handleRecordTypeChange}
+                                type="radio"
+                            ></lightning-radio-group>
+                        </div>
+                    </template>
+
+                    <lightning-record-form
+                        object-api-name={sobject}
+                        record-type-id={selectedRecordTypeId}
+                        layout-type="Full"
+                        onsuccess={handleSuccess}
+                        oncancel={handleClose}
+                    ></lightning-record-form>
+                </div>
+
+                <div class="slds-modal__footer">
+
+                    <lightning-button
+                        label="Close"
+                        onclick={handleClose}
+                        variant="brand"
+                    ></lightning-button>
+
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+
+    </template>
+</template>
