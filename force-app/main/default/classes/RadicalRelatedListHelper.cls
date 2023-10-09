@@ -85,6 +85,7 @@ public with sharing class RadicalRelatedListHelper {
                         new FieldWrapper(
                             fieldDesc.getLabel(), 
                             fieldDesc.getName(), 
+                            fieldDesc.getInlineHelpText(),
                             String.valueof(fieldDesc.getType()), 
                             apexTypetoJSType.get(String.valueof(fieldDesc.getType())), 
                             fieldDesc.isUpdateable(), 
@@ -98,6 +99,7 @@ public with sharing class RadicalRelatedListHelper {
                         new FieldWrapper(
                             fieldDesc.getLabel(), 
                             fieldDesc.getName(), 
+                            fieldDesc.getInlineHelpText(),
                             String.valueof(fieldDesc.getType()), 
                             apexTypetoJSType.get(String.valueof(fieldDesc.getType())), 
                             fieldDesc.isUpdateable(), 
@@ -119,6 +121,7 @@ public with sharing class RadicalRelatedListHelper {
                         new FieldWrapper(
                             fieldDesc.getLabel(), 
                             fieldDesc.getName(), 
+                            fieldDesc.getInlineHelpText(),
                             'RICHTEXTAREA', 
                             'richtextarea', 
                             fieldDesc.isUpdateable(), 
@@ -147,6 +150,7 @@ public with sharing class RadicalRelatedListHelper {
                         new FieldWrapper(
                             fieldDesc.getLabel(), 
                             fieldDesc.getName(), 
+                            fieldDesc.getInlineHelpText(),
                             dataType, 
                             ltngType.toLowerCase(), 
                             fieldDesc.isUpdateable(), 
@@ -292,6 +296,7 @@ public with sharing class RadicalRelatedListHelper {
     public class FieldWrapper {
         @AuraEnabled public String label;
         @AuraEnabled public String value;
+        @AuraEnabled public String help;
         @AuraEnabled public String dataType;
         @AuraEnabled public String ltngType;
         @AuraEnabled public Boolean isEditable;
@@ -300,6 +305,7 @@ public with sharing class RadicalRelatedListHelper {
         public FieldWrapper(
             String label, 
             String value, 
+            String help, 
             String dataType, 
             String ltngType, 
             Boolean isEditable, 
@@ -308,6 +314,7 @@ public with sharing class RadicalRelatedListHelper {
         ) {
             this.label = label;
             this.value = value;
+            this.help = help;
             this.dataType = dataType;
             this.ltngType = ltngType;
             this.isEditable = isEditable;
