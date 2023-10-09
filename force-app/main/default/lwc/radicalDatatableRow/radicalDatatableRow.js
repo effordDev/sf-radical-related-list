@@ -18,12 +18,9 @@ export default class RadicalDatatableRow extends LightningElement {
     isSaving = false
     editState = false
 
-    // @api get record() {
-    //     return this._record
-    // }
-    // set record(value) {
-    //     this._record = Object.assign({}, value)
-    // }
+    get rowTds() {
+        return this.fields.filter(x => x?.value != 'edit') || []
+    }
 
     async handleSaveClick(event) {
 

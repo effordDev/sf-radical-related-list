@@ -2,7 +2,7 @@
     <!-- childSobject: {childSobject}  -->
     <template for:each={fields} for:item="field">
 
-        <td key={field.value} class="slds-text-align_center" data-label={field.label}>
+        <td key={field.value} class="slds-text-align_center slds-cell_action-mode" data-label={field.label}>
             <div key={field.value} title={field.label}>
                 <c-radical-datatable-cell
                     key={field.value}
@@ -18,7 +18,7 @@
 
     </template>
 
-    <td scope="col">
+    <td class="slds-text-align_center slds-cell_action-mode">
         <span title="edit">
             
             <!-- sldsValidatorIgnoreNextLine -->

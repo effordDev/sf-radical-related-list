@@ -1,42 +1,49 @@
 <template> 
 
     <!-- <table> -->
-    <table class="slds-table slds-table_bordered slds-table_resizable-cols">
-        <thead>
-            <tr>
-            <!-- <tr class="slds-line-height_reset"> -->
-                <template for:each={fields} for:item="field">
-                    <th key={field.value} class="slds-text-align_center" scope="col">
-                        <div class="slds-truncate" title={field.label}>
-                            {field.label}
-                        </div>
-                    </th>
-                </template>
+    <div 
+        id="containerDiv" 
+        onmousemove={handleMouseMove} 
+        onmouseup={handleMouseUp}
+        ondblclick={handleDBLClickResizable}
+        class="tableScroll"
+    >
 
+        <div id="tableViewInnerDiv" onscroll={tableScrolled} class="slds-scrollable_y tableViewInnerDiv">
+            <table class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols slds-max-medium-table--stacked">
+                <thead>
+                    <tr>
+                        <template for:each={fields} for:item="field">
+                            <th key={field.value} style={fixedWidth} class="slds-text-align_center slds-is-resizable slds-cell_action-mode dv-dynamic-width" scope="col">
+                                <div class="slds-truncate" title={field.label}>
+                                    {field.label}
+                                </div>
+                                <div key={field.value} class="slds-resizable">
+                                    <span class="slds-resizable__handle" onmousedown={handleMouseDown}>
+                                        <span class="slds-resizable__divider radical_resizable__divider"></span>
+                                    </span>
+                                </div>
+                            </th>
+                        </template>
+                    </tr>
+                </thead>
 
-                <th class="" scope="col">
-                    <div class="slds-truncate" title="edit">
-                        <!-- edit btn col -->
-                    </div>
-                </th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <template for:each={records} for:item="record">
-                <c-radical-datatable-row
-                    key={record.Id}
-                    class="slds-hint-parent"
-                    record-id={recordId}
-                    fields={fields}
-                    record={record}
-                    child-sobject={childSobject}
-                    show-delete-button={showDeleteButton}
-                ></c-radical-datatable-row>
-            </template>
-        </tbody>
-    </table>
-   
+                <tbody>
+                    <template for:each={records} for:item="record">
+                        <c-radical-datatable-row
+                            key={record.Id}
+                            class="slds-hint-parent"
+                            record-id={recordId}
+                            fields={fields}
+                            record={record}
+                            child-sobject={childSobject}
+                            show-delete-button={showDeleteButton}
+                        ></c-radical-datatable-row>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+    </div>
     
 </template>
         

@@ -33,6 +33,7 @@ export default class RadicalRelatedList extends LightningElement {
 
     get fieldsList() {
         return this.config?.fieldsList || []
+        // return [...this.config?.fieldsList, { label:'Edit' , value:'edit' }] || []
     }
     // get recordList() {
     //     return this.config?.recordList || []
