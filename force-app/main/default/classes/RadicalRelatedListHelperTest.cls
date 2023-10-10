@@ -24,12 +24,12 @@ public with sharing class RadicalRelatedListHelperTest {
         Test.startTest();
         
             RadicalRelatedListHelper.ReturnWrapper result = RadicalRelatedListHelper.getRecords(
-                acct.Id,'Opportunity',
-                'Name,CloseDate,Probability,StageName,IQscore,Amount,IsPrivate',
-                'true', 
+                acct.Id,
+                'Opportunity',
+                'Name,CloseDate,AccountId,Probability,StageName,IQscore,Amount,IsPrivate',
                 '', 
-                '', 
-                'Name != "Test"', 
+                'Account', 
+                'Name != null', 
                 '', 
                 ''
             );
