@@ -4,11 +4,6 @@ public with sharing class RadicalRelatedListHelper {
     public class myException extends BaseException {}
 
     @AuraEnabled
-    public static SObject saveSobjects() {
-        return null;
-    }
-
-    @AuraEnabled
     public static ReturnWrapper getRecords(
         String parentRecordId, 
         String sObjectName, 
