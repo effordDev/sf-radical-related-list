@@ -8,6 +8,8 @@ export default class RadicalTextarea extends LightningElement {
 
     @track _record = {}
 
+    show = false
+
     @api get record() {
         return this._record
     }
@@ -16,10 +18,28 @@ export default class RadicalTextarea extends LightningElement {
     }
 
     get recordValue() {
-        return this.record[this.fieldName]
+        return this.record[this.fieldName] || ''
     }
     get disabled() {
         return !this.isEdit
+    }
+
+    get disabledValue() {
+        return this.recordValue?.substring(0, this.show ? this.recordValue.length : 50) + (!this.show && !!this.isTruncated && '...')
+    }
+
+    get isTruncated() {
+        return this.recordValue.length > 50
+    }
+
+    get showLabel() {
+        return this.show ? 
+        'Hide' :
+        'Show More...'
+    }
+
+    handleShowMoreClick() {
+        this.show = this.show ? false : true
     }
 
     handleChange(event) {

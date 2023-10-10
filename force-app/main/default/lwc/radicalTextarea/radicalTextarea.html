@@ -1,8 +1,15 @@
 <template>
     <template lwc:if={disabled}>
+        <div style="text-wrap: wrap;"> 
         <!-- <div class="slds-table_edit_container slds-is-relative">  -->
-            {recordValue}
-        <!-- </div> -->
+            {disabledValue}
+        </div>
+
+        <template lwc:if={isTruncated}>
+            <br />
+    
+            <a onclick={handleShowMoreClick}>{showLabel}</a>
+        </template>
     </template>
     <template lwc:else>
         <!-- <div class="picklistBlock">
