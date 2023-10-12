@@ -27,8 +27,17 @@ export default class RadicalDatatableCell extends LightningElement {
     get ltngType() {
         return this.field?.ltngType
     }
+    get dataType() {
+        return this.field?.dataType
+    }
     get isText() {
         return this.ltngType === 'text'
+    }
+    get isNumber() {
+        return this.ltngType === 'number' && this.dataType === 'DOUBLE'
+    }
+    get isCurrency() {
+        return this.ltngType === 'number' && this.dataType === 'CURRENCY'
     }
     get isCheckbox() {
         return this.ltngType === 'checkbox'

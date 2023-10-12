@@ -1,14 +1,31 @@
 <template>
     <!-- {recordValue} - {fieldAPIName} - {isEdit} -->
 
+    <!-- isCurrency: {isCurrency} -->
     <!-- <template lwc:if={isEdit}> -->
-
+        <!-- {fieldAPIName} -->
         <template lwc:if={isText}>
             <c-radical-text
                 field-name={fieldAPIName}
                 record={record}
                 is-edit={isEdit}
             ></c-radical-text>
+        </template>
+
+        <template lwc:if={isNumber}>
+            <c-radical-number
+                field-name={fieldAPIName}
+                record={record}
+                is-edit={isEdit}
+            ></c-radical-number>
+        </template>
+
+        <template lwc:if={isCurrency}>
+            <c-radical-currency
+                field-name={fieldAPIName}
+                record={record}
+                is-edit={isEdit}
+            ></c-radical-currency>
         </template>
 
         <template lwc:elseif={isCheckbox}>

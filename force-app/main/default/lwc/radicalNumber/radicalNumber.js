@@ -1,15 +1,11 @@
 import { api, track, LightningElement } from 'lwc';
 
-export default class RadicalText extends LightningElement {
+export default class RadicalNumber extends LightningElement {
     @api fieldName = ''
     // @api record = {}
     @api isEdit = false
     @track _record = {}
     
-    connectedCallback() {
-        console.log(JSON.parse(JSON.stringify(this.record)))
-    }
-
     @api get record() {
         return this._record
     }
@@ -35,7 +31,7 @@ export default class RadicalText extends LightningElement {
                 bubbles: true,
                 composed: true,
                 detail: {
-                    value,
+                    value: value,
                     rowId: this.record.Id,
                     fieldName: this.fieldName
                 }

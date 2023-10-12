@@ -1,9 +1,11 @@
 <template>
     
     <template lwc:if={disabled}>
-        <lightning-formatted-rich-text
-            value={recordValue}
-        ></lightning-formatted-rich-text>
+        <div style="text-wrap: wrap;"> 
+            <lightning-formatted-rich-text
+                value={recordValue}
+            ></lightning-formatted-rich-text>
+        </div>
     </template>
 
     <template lwc:else>

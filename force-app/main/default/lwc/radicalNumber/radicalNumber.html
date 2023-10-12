@@ -1,18 +1,18 @@
+
 <template>
-
-    <!-- fieldName: {fieldName} <br /> -->
-
+    <!-- {fieldName} -->
     <template lwc:if={disabled}>
         <div style="text-wrap: wrap;"> 
-            <lightning-formatted-rich-text
+            <lightning-formatted-number 
                 value={recordValue}
-            ></lightning-formatted-rich-text>
+            ></lightning-formatted-number>
         </div>
     </template>
     <template lwc:else>
         <lightning-input 
-            name="text" 
-            type="text" 
+            name="number" 
+            type="number" 
+            step="0.01"
             variant='label-hidden'
             value={recordValue} 
             onchange={handleChange}
