@@ -25,7 +25,10 @@ export default class RadicalTextarea extends LightningElement {
     }
 
     get disabledValue() {
-        return this.recordValue?.substring(0, this.show ? this.recordValue.length : 50) + (!this.show && !!this.isTruncated && '...')
+        if (this.recordValue.length >= 50) {
+            return this.recordValue?.substring(0, this.show ? this.recordValue.length : 50) + (!this.show && !!this.isTruncated && '...') || ''
+        }
+        return this.recordValue
     }
 
     get isTruncated() {
