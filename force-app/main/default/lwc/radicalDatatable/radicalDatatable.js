@@ -9,7 +9,7 @@ export default class RadicalRelatedList extends LightningElement {
     @api showDeleteButton = false
 
     // fixedWidth = 'fit-content'
-    fixedWidth = 'width:15rem;'
+    thStyle = 'width:15rem; background: #F3F3F3; position: sticky; top: 0px; z-index: 9999;'
 
     tableCol
     mouseDown = false
