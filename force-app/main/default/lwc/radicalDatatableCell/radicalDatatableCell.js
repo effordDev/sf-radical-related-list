@@ -32,7 +32,7 @@ export default class RadicalDatatableCell extends LightningElement {
     }
     get isText() {
         return this.ltngType === 'text' ||
-        this.ltngType === 'phone' ||
+        this.ltngType === 'tel' ||
         this.ltngType === 'email' 
     }
     get isNumber() {
