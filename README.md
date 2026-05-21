@@ -1,9 +1,6 @@
 # sf-radical-related-list
 
-<a href="https://githubsfdeploy.herokuapp.com?owner=effordDev&repo=sf-radical-related-list&ref=main">
-  <img alt="Deploy to Salesforce"
-       src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png">
-</a>
+[![Deploy with reapd](https://reapd.io/badge.svg)](https://reapd.io/app?author=effordDev&repo=sf-radical-related-list&branch=main)
 
 ## Overview
 
